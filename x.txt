@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Her Space 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFF9F9; --card: #FFFFFF; --text: #3D2C33; --mute: #8A737D;
+    --main: #D87093; --main-bg: #FDE8ED; --line: #F5D0DC; --ok: #6FA58F; --gold: #D81B60;
+  }
+  [data-theme="dark"] {
+    --bg: #1A1518; --card: #261F23; --text: #FCEFF2; --mute: #B39FA8;
+    --main-bg: #38252E; --line: #4A323E;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+  body { background: var(--bg); color: var(--text); padding-bottom: 80px; min-height: 100vh; }
+  
+  /* خلفية زهور ناعمة */
+  body::before { content: "🌸"; position: fixed; top: 10px; right: 10px; font-size: 80px; opacity: 0.15; pointer-events: none; }
+  body::after { content: "🌺"; position: fixed; bottom: 80px; left: 10px; font-size: 80px; opacity: 0.15; pointer-events: none; }
+
+  header { max-width: 500px; margin: 0 auto; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-size: 22px; font-weight: 800; color: var(--main); }
+  .top-btns button { background: var(--card); border: 1px solid var(--line); padding: 6px 12px; border-radius: 20px; cursor: pointer; color: var(--main); font-weight: 700; }
+
+  main { max-width: 500px; margin: 0 auto; padding: 0 15px; }
+
+  /* شريط التبويبات العلوي */
+  .nav-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
+  .chip-btn { background: var(--card); border: 1px solid var(--line); padding: 8px 14px; border-radius: 20px; white-space: nowrap; font-size: 13px; font-weight: 700; color: var(--mute); cursor: pointer; }
+  .chip-btn.active { background: var(--main); color: #fff; border-color: var(--main); }
+
+  /* البطاقات */
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 15px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+  .box h3 { font-size: 15px; font-weight: 800; color: var(--main); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  
+  input, select, textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font-size: 13px; margin-top: 5px; margin-bottom: 8px; outline: none; }
+  
+  .btn { background: var(--main); color: #fff; border: none; padding: 9px; width: 100%; border-radius: 10px; font-weight: 700; cursor: pointer; }
+  .btn-danger { background: #E57373; color: #fff; border: none; padding: 5px 10px; border-radius: 8px; font-size: 11px; cursor: pointer; }
+
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .row:last-child { border-bottom: none; }
+  
+  .tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: var(--main-bg); color: var(--main); }
+  
+  /* شريط التصفح السفلي */
+  nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
+  nav button { background: none; border: none; font-size: 10px; color: var(--mute); font-weight: 700; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+  nav button.active { color: var(--main); font-weight: 800; }
+  nav button span { font-size: 18px; }
+
+  .page-content { display: none; }
+  .page-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🌸 Her Space</div>
+  <div class="top-btns">
+    <button onclick="toggleLang()" id="langBtn">EN</button>
+    <button onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<main>
+  <!-- الأزرار العلوية -->
+  <div class="nav-chips">
+    <button class="chip-btn active" onclick="openPage('p1', this)">⚡ اليومي والأساسي</button>
+    <button class="chip-btn" onclick="openPage('p2', this)">🧪 المختبر والتطور</button>
+    <button class="chip-btn" onclick="openPage('p3', this)">💄 الجمال والعافية</button>
+    <button class="chip-btn" onclick="openPage('p4', this)">🎯 مستقبلي والأهداف</button>
+    <button class="chip-btn" onclick="openPage('p5', this)">🕌 ديني</button>
+    <button class="chip-btn" onclick="openPage('p6', this)">💜 ملاذي ونفسيتي</button>
+  </div>
+
+  <!-- 1. اليومي والأساسي -->
+  <div id="p1" class="page-content active">
+    <div class="box" style="background: var(--main-bg);">
+      <h3>🌱 1. ابدئي من جديد <button class="btn-danger" onclick="alert('تم تصفير ضغط اليوم! ابدئي بـ 3 أهداف خفيفة 🌸')">تصفير اليوم 🔄</button></h3>
+      <p style="font-size:11px;">إذا تخربط يومكِ، تخلصي من الشعور بالذنب ورتبي أولويات خفيفة لللحظة الحالية.</p>
+    </div>
+
+    <div class="box">
+      <h3>🧘 23. وضع الهدوء (للأيام المزدحمة)</h3>
+      <input type="text" placeholder="خطوة بسيطة رقم 1...">
+      <input type="text" placeholder="خطوة بسيطة رقم 2...">
+    </div>
+
+    <div class="box">
+      <h3>⚡ 2. مساعد اختيار الأولويات</h3>
+      <select>
+        <option>طاقة عالية ⚡</option>
+        <option>طاقة متوازنة 🌸</option>
+        <option>طاقة هادئة ☁️</option>
+      </select>
+      <input type="text" placeholder="مهم ومستعجل 🔴">
+      <input type="text" placeholder="مهم وغير مستعجل 🟡">
+    </div>
+
+    <div class="box">
+      <h3>⏱️ 27. مولد الروتين حسب الوقت</h3>
+      <select>
+        <option>10 دقائق ⚡ (ترتيب + شرب ماء)</option>
+        <option>20 دقيقة 🌸 (عناية + كتابة أهداف)</option>
+        <option>30 دقيقة 🌿 (قراءة + رياضة خفيفة)</option>
+      </select>
+      <button class="btn" onclick="alert('تم اختيار الروتين المتاح 🌸')">تطبيق الروتين</button>
+    </div>
+
+    <div class="box">
+      <h3>⏳ 5. كاشف مضيعات الوقت</h3>
+      <input type="text" placeholder="أين ذهب وقتكِ اليوم؟ (مثال: تصفح 30 د)...">
+      <button class="btn" onclick="alert('تم الحفظ لمراجعة نهاية الأسبوع 💡')">تسجيل الملاحظة</button>
+    </div>
+
+    <div class="box">
+      <h3>💳 19. مخطط المصاريف</h3>
+      <input type="text" placeholder="الغرض...">
+      <input type="number" placeholder="المبلغ...">
+      <button class="btn" onclick="alert('تم حفظ المصروف 💰')">حفظ</button>
+    </div>
+  </div>
+
+  <!-- 2. المختبر والتطور -->
+  <div id="p2" class="page-content">
+    <div class="box" style="border-color: var(--gold);">
+      <h3 style="color: var(--gold);">🏆 8. بنك الإنجازات السحرية</h3>
+      <input type="text" id="achieveInput" placeholder="ما الفوز الصغير الذي حققتِه اليوم؟...">
+      <button class="btn" style="background: var(--gold);" onclick="addAchieve()">تسجيل الفوز ✨</button>
+      <div id="achieveList" style="margin-top:8px;"></div>
+    </div>
+
+    <div class="box">
+      <h3>🧪 10 & 26. مختبر العادات ومؤشر الاستمرارية</h3>
+      <div class="row">
+        <span>قراءة 10 صفحات يومياً</span>
+        <span class="tag">الرجوع بعد الانقطاع: 3 مرات 🔥</span>
+      </div>
+      <input type="text" placeholder="ما الذي سهل العادة أو عطلها؟..." style="margin-top:8px;">
+    </div>
+
+    <div class="box">
+      <h3>⏱️ 3. مؤقت التركيز الذكي (Pomodoro)</h3>
+      <div style="text-align:center; font-size:28px; font-weight:800; color:var(--main); margin:8px 0;">25:00</div>
+      <button class="btn" onclick="alert('بدأت جلسة التركيز 🌸')">بدء الجلسة</button>
+    </div>
+
+    <div class="box">
+      <h3>📊 4 & 30. خريطة توزيع الوقت والمنحنى الأسبوعي</h3>
+      <div class="row"><span>السبت</span><span class="tag">40%</span></div>
+      <div class="row"><span>الأحد</span><span class="tag">70%</span></div>
+      <div class="row"><span>الإثنين</span><span class="tag">85%</span></div>
+    </div>
+
+    <div class="box">
+      <h3>📚 9 & 14. خريطة المهارات والمكتبة</h3>
+      <input type="text" placeholder="مهارة جديدة تتعلميها...">
+      <textarea placeholder="اقتباسات ملهمة، ملخصات كتب..."></textarea>
+    </div>
+
+    <div class="box">
+      <h3>💡 7. أفكار تستحق التجربة</h3>
+      <input type="text" placeholder="فكرة مشروع أو كتاب...">
+      <select><option>جديدة 💡</option><option>قيد التجربة 🧪</option><option>تمت ✅</option></select>
+    </div>
+
+    <div class="box">
+      <h3>🔥 11. تحديات شخصية</h3>
+      <div class="row"><span>تحدي 7 أيام قراءة 📖</span><input type="checkbox"></div>
+      <div class="row"><span>أسبوع بلا تصفح عشوائي 🚫</span><input type="checkbox"></div>
+    </div>
+  </div>
+
+  <!-- 3. الجمال والعافية -->
+  <div id="p3" class="page-content">
+    <div class="box">
+      <h3>💄 16. روتين الجمال وتقييم النجوم</h3>
+      <div class="row">
+        <div><b>غسول + واقي شمس ☀️</b><br><span style="color:var(--gold)">★★★★★</span></div>
+        <input type="checkbox">
+      </div>
+      <div class="row">
+        <div><b>ترطيب ماسك الليل 🌙</b><br><span style="color:var(--gold)">★★★★★</span></div>
+        <input type="checkbox">
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>⚖️ 17. مقياس التوازن الشخصي</h3>
+      <div class="row"><span>الراحة والصحة 🌸</span><input type="number" value="4" style="width:40px; margin:0;"></div>
+      <div class="row"><span>الدراسة والعمل 📚</span><input type="number" value="3" style="width:40px; margin:0;"></div>
+      <div class="row"><span>العلاقات والعائلة 👨‍👩‍👧</span><input type="number" value="5" style="width:40px; margin:0;"></div>
+    </div>
+  </div>
+
+  <!-- 4. مستقبلي والأهداف -->
+  <div id="p4" class="page-content">
+    <div class="box" style="background:#FFF3E0;">
+      <h3>🚨 12. مولد خطط الطوارئ (الخطة B)</h3>
+      <input type="text" placeholder="إذا لم أستطع دراسة ساعة -> البديل: 15 دقيقة بتركيز">
+    </div>
+
+    <div class="box">
+      <h3>🎯 18 & 20 & 21. الأهداف وخريطة الأحلام</h3>
+      <input type="text" placeholder="هدف الأسبوع...">
+      <input type="text" placeholder="هدف الشهر...">
+      <textarea placeholder="خطوات الأحلام الكبيرة والمشاريع..."></textarea>
+    </div>
+
+    <div class="box">
+      <h3>🖼️ 23. لوحة الرؤية (Vision Board)</h3>
+      <input type="file" accept="image/*" onchange="alert('تم رفع الصورة للوحة الرؤية 🌸')">
+    </div>
+  </div>
+
+  <!-- 5. ديني -->
+  <div id="p5" class="page-content">
+    <div class="box">
+      <h3>🕌 24. متابعة الصلوات الخمس</h3>
+      <div class="row"><span>الفجر 🌅</span><input type="checkbox"></div>
+      <div class="row"><span>الظهر ☀️</span><input type="checkbox"></div>
+      <div class="row"><span>العصر 🌤️</span><input type="checkbox"></div>
+      <div class="row"><span>المغرب 🌅</span><input type="checkbox"></div>
+      <div class="row"><span>العشاء 🌙</span><input type="checkbox"></div>
+    </div>
+
+    <div class="box" style="text-align:center;">
+      <h3>📿 25. المسبحة الرقمية</h3>
+      <div style="font-size:36px; font-weight:800; color:var(--main);" id="counter">0</div>
+      <button class="btn" onclick="countUp()">سبّحي هنا 🌸</button>
+      <button class="btn-danger" style="margin-top:6px;" onclick="resetCount()">تصفير</button>
+    </div>
+  </div>
+
+  <!-- 6. ملاذي ونفسيتي -->
+  <div id="p6" class="page-content">
+    <div class="box">
+      <h3>📖 6. دفتر القرارات</h3>
+      <input type="text" placeholder="القرار الحائر فيه...">
+      <textarea placeholder="الإيجابيات والسلبيات والنتائج..."></textarea>
+    </div>
+
+    <div class="box">
+      <h3>💭 15. سؤال الأسبوع العميق</h3>
+      <p style="font-size:11px; color:var(--main); margin-bottom:5px;">"ما الشيء الذي أفعله لإرضاء الآخرين وأريد تغييره فعلاً؟"</p>
+      <textarea placeholder="إجابتكِ الهادئة..."></textarea>
+    </div>
+
+    <div class="box">
+      <h3>🚫 13. أشياء أريد التوقف عنها</h3>
+      <input type="text" placeholder="السلوك المراد تقليله...">
+      <input type="text" placeholder="المحفز والبديل المناسب...">
+    </div>
+
+    <div class="box">
+      <h3>🎁 17. ركن المكافآت</h3>
+      <input type="text" placeholder="مكافأة عند إنجاز هدف الأسبوع...">
+    </div>
+
+    <div class="box">
+      <h3>💌 22 & 24 & 25. العلاقات والامتنان والأرشيف</h3>
+      <textarea placeholder="أشياء جميلة حدثت اليوم + رسالة لنفسي المستقبليّة..."></textarea>
+    </div>
+  </div>
+</main>
+
+<!-- التنقل السفلي -->
+<nav>
+  <button class="active" onclick="openPage('p1', this)"><span>⚡</span>اليومي</button>
+  <button onclick="openPage('p2', this)"><span>🧪</span>المختبر</button>
+  <button onclick="openPage('p3', this)"><span>💄</span>الجمال</button>
+  <button onclick="openPage('p4', this)"><span>🎯</span>مستقبلي</button>
+  <button onclick="openPage('p5', this)"><span>🕌</span>ديني</button>
+  <button onclick="openPage('p6', this)"><span>💜</span>ملاذي</button>
+</nav>
+
+<script>
+  var num = 0;
+
+  function openPage(pageId, btn) {
+    // إخفاء كافة الصفحات
+    var pages = document.querySelectorAll('.page-content');
+    pages.forEach(p => p.classList.remove('active'));
+
+    // إظهار الصفحة المطلوبة
+    document.getElementById(pageId).classList.add('active');
+
+    // تحديث أزرار التنقل
+    var btns = document.querySelectorAll('.chip-btn, nav button');
+    btns.forEach(b => b.classList.remove('active'));
+    
+    if(btn) btn.classList.add('active');
+  }
+
+  function countUp() {
+    num++;
+    document.getElementById('counter').innerText = num;
+  }
+
+  function resetCount() {
+    num = 0;
+    document.getElementById('counter').innerText = 0;
+  }
+
+  function addAchieve() {
+    var val = document.getElementById('achieveInput').value;
+    if(!val) return;
+    var list = document.getElementById('achieveList');
+    var div = document.createElement('div');
+    div.className = 'row';
+    div.innerHTML = `<span>🏆 ${val}</span><span class="tag">فوز ممتاز</span>`;
+    list.appendChild(div);
+    document.getElementById('achieveInput').value = '';
+  }
+
+  function toggleLang() {
+    var b = document.getElementById('langBtn');
+    b.innerText = b.innerText === 'EN' ? 'ع' : 'EN';
+  }
+
+  function toggleTheme() {
+    var isDark = document.body.getAttribute('data-theme') === 'dark';
+    if(isDark) document.body.removeAttribute('data-theme');
+    else document.body.setAttribute('data-theme', 'dark');
+  }
+</script>
+</body>
+</html>
